@@ -1,2 +1,3 @@
 - name: Hexo Action
   uses: sma11black/hexo-action@v1.0.4
+
