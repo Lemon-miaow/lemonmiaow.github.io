@@ -103,7 +103,7 @@ theme: landscape
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repo: git@github.com:Lemon-miaow/lemonmiaow.github.io.git
+  repo: git@github.com:Lemon-miaow/Lemon-miaow.github.io.git
   branch: master
   name: Lemon-miaow
   email: lemonmiaow@gmail.com
