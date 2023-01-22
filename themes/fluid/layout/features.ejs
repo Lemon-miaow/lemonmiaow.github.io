@@ -1,0 +1,10 @@
+<%
+page.layout = "features"
+page.title = theme.features.title || __('features.title')
+page.subtitle = theme.features.subtitle || __('features.subtitle')
+page.banner_img = theme.features.banner_img
+page.banner_img_height = theme.features.banner_img_height
+page.banner_mask_alpha = theme.features.banner_mask_alpha
+%>
+
+<%- partial('_partials/features-list.ejs', { params: { key: page.layout, postTotal: site.posts.length } }) %>
