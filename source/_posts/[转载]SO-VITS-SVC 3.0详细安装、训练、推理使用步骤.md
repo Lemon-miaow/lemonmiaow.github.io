@@ -1,12 +1,14 @@
 ---
-title: 【转载】SO-VITS-SVC详细安装、训练、推理使用步骤
-
+title: 【转载】SO-VITS-SVC 3.0 详细安装、训练、推理使用步骤
+tag: SO-VITS-SVC
 ---
 
-# SO-VITS-SVC详细安装、训练、推理使用步骤
+# SO-VITS-SVC 3.0详细安装、训练、推理使用步骤
 
 本帮助文档为项目 [so-vits-svc](https://github.com/innnky/so-vits-svc) 的详细中文安装、调试、推理教程，您也可以直接选择官方[README](https://github.com/innnky/so-vits-svc#readme)文档
 撰写：Sucial [点击跳转B站主页](https://space.bilibili.com/445022409)
+
+**注：本文章所讲解的是so-vits-svc <u>3.0</u>的版本，可能不适用于<u>4.0</u>版本的so-vits-svc**
 
 ----
 
