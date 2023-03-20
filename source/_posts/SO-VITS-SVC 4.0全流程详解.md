@@ -1,7 +1,7 @@
-```yaml
+---
 title: SO-VITS-SVC 4.0 全流程详解
 tag: SO-VITS-SVC
-```
+---
 
 # SO-VITS-SVC 4.0 全流程详解
 
