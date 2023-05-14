@@ -1,9 +1,9 @@
 ---
-title: SO-VITS-SVC 4.0 全流程详解
+title: SO-VITS-SVC 4.0 全流程教程
 tag: SO-VITS-SVC
 ---
 
-# SO-VITS-SVC 4.0 全流程详解
+# SO-VITS-SVC 4.0 全流程教程
 
 本篇目为项目[SO-VITS-SVC 4.0](https://github.com/svc-develop-team/so-vits-svc)的预处理及训练、推理提供相关教程，建议用于参考而非完全使用。~~本文章不是生活必需品~~，您也可以直接使用[官方文档](https://github.com/svc-develop-team/so-vits-svc/blob/4.0/README_zh_CN.md)
 
