@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>来 点 二 次 元</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #image {
+            max-width: 100%;
+            max-height: 100%;
+        }
+    </style>
+    <script>
+        // 定义一个全局变量，用于存储随机选择的文件名
+        var randomFileName = "";
+        // 定义一个全局变量，用于存储文件的共同路径
+        var basePath = "https://github.com/Lemon-miaow/pic/raw/random/random-pictures/1-500/";
+
+        function getRandomFile() {
+            // 显示加载中的图片
+            document.getElementById("image").src = "https://github.com/Lemon-miaow/Lemon-miaow.github.io/raw/main/themes/fluid/source/img/loading00.gif";
+
+            // 使用XMLHttpRequest对象读取文本文件内容
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // 将文本内容按换行符分割成数组
+                    var fileNames = xhr.responseText.split("\n");
+                    // 随机选择一个文件名
+                    randomFileName = fileNames[Math.floor(Math.random() * fileNames.length)];
+                    // 构建完整的文件路径
+                    var imagePath = basePath + randomFileName;
+                    // 更新图片的src属性，显示对应的图片
+                    document.getElementById("image").src = imagePath;
+                }
+            };
+            // 修改此处的txt文件路径
+            xhr.open("GET", "https://raw.githubusercontent.com/Lemon-miaow/pic/random/random-pictures/list/1-500.txt", true);
+            xhr.send();
+        }
+
+        window.addEventListener('load', function() {
+            getRandomFile();
+        });
+    </script>
+</head>
+<body>
+    <br>
+    <img id="image" src="" alt="别急">
+</body>
+</html>
