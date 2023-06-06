@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@traptitech/markdown-it-katex": "^3.6.0",
+    "css": "^3.0.0",
     "hexo": "^6.3.0",
     "hexo-admonition": "^1.1.2",
     "hexo-bilibili-card": "^0.6.1",
