@@ -21,11 +21,11 @@
         // 定义一个全局变量，用于存储随机选择的文件名
         var randomFileName = "";
         // 定义一个全局变量，用于存储文件的共同路径
-        var basePath = "https://github.com/Lemon-miaow/pic/raw/random/random-pictures/1-500/";
+        var basePath = "https://raw.lemonmiaow.xyz/Lemon-miaow/pic/random/random-pictures/1-500/";
 
         function getRandomFile() {
             // 显示加载中的图片
-            document.getElementById("image").src = "https://github.com/Lemon-miaow/Lemon-miaow.github.io/raw/main/themes/fluid/source/img/loading00.gif";
+            document.getElementById("image").src = "https://raw.lemonmiaow.xyz/Lemon-miaow/Lemon-miaow.github.io/main/themes/fluid/source/img/loading00.gif";
 
             // 使用XMLHttpRequest对象读取文本文件内容
             var xhr = new XMLHttpRequest();
@@ -42,7 +42,7 @@
                 }
             };
             // 修改此处的txt文件路径
-            xhr.open("GET", "https://lemonmiaow.xyz/custom/randomlist/1-500.html", true);
+            xhr.open("GET", "https://raw.lemonmiaow.xyz/Lemon-miaow/pic/random/random-pictures/list/1-500.txt", true);
             xhr.send();
         }
 
