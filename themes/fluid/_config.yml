@@ -962,6 +962,58 @@ about:
 
 
 #---------------------------
+# 小工具页
+# Features Page
+#---------------------------
+features:
+  enable: true
+  banner_img: /img/banner.png
+  banner_img_height: 60
+  banner_mask_alpha: 0.2
+  # 友链的成员项
+  # Member item of page
+  items:
+    - {
+      title: "Mashirl's Blog",
+      intro: "Mashirl's Blog",
+      link: "https://mashirl.com/",
+      avatar: "https://cdn.jsdelivr.net/gh/Mashirl/Blog/source/images/avatar.jpg"
+    }
+    - {
+      title: "Flyemoji Hub",
+      intro: "Flyemoji 嘿嘿🤤",
+      link: "https://flyemoji.xyz/",
+      avatar: "https://play.flyemoji.moe/assets/images/image01.jpg"
+    }
+    - {
+      title: "这是什么？点一下",
+      intro: "这是什么？点一下",
+      link: "https://www.bilibili.com/video/BV1GJ411x7h7/",
+      avatar: "/img/avatar/what.png"
+    }
+
+  # 当成员头像加载失败时，替换为指定图片
+  # When the member avatar fails to load, replace the specified image
+  onerror_avatar: /img/loading.gif
+
+  # 友链下方自定义区域，支持 HTML，可插入例如申请友链的文字
+  # Custom content at the bottom of the links
+  custom:
+    enable: false
+    content: '<hr><p>在下方留言申请加入我的友链，按如下格式提供信息：</p><ul><li>博客名：Fluid</li><li>简介：Fluid 主题官方博客</li><li>链接：https://hexo.fluid-dev.com</li><li>图片：https://hexo.fluid-dev.com/img/favicon.png</li></ul>'
+
+  # 评论插件
+  # Comment plugin
+  comments:
+    enable: false
+    # 指定的插件，需要同时设置对应插件的必要参数
+    # The specified plugin needs to set the necessary parameters at the same time
+    # Options: utterances | disqus | gitalk | valine | waline | changyan | livere | remark42 | twikoo | cusdis | giscus
+    type: disqus
+
+
+
+#---------------------------
 # 自定义页
 # Custom Page
 #

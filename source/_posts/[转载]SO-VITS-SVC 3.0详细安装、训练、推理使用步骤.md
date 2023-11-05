@@ -1,5 +1,6 @@
 ---
 title: 【转载】SO-VITS-SVC 3.0 详细安装、训练、推理使用步骤
+index_img: /img/banner/002.jpg
 tag: SO-VITS-SVC
 ---
 

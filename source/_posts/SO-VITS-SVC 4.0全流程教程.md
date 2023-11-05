@@ -1,5 +1,6 @@
 ---
 title: SO-VITS-SVC 4.0 全流程教程
+index_img: /img/banner/002.jpg
 tag: SO-VITS-SVC
 ---
 
