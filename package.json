@@ -16,7 +16,7 @@
     "css": "^3.0.0",
     "hexo": "^7.0.0",
     "hexo-admonition": "^1.1.2",
-    "hexo-bilibili-card": "^0.6.1",
+    "hexo-bilibili-card": "^0.6.3",
     "hexo-deployer-git": "^4.0.0",
     "hexo-generator-archive": "^2.0.0",
     "hexo-generator-category": "^2.0.0",
