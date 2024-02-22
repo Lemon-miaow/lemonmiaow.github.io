@@ -1,0 +1,941 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/bilicard.css">
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/icon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#00000000">
+  <meta name="author" content="Lemon_miaow">
+  <meta name="keywords" content="Lemon_miaow">
+  
+    <meta name="description" content="SO-VITS-SVC 4.0 全流程教程 本篇目为项目SO-VITS-SVC 4.0的预处理及训练、推理提供相关教程，建议用于参考而非完全使用。本文章不是生活必需品，您也可以直接使用官方文档  法律条例参考及免责声明 《民法典》 第一千零一十九条 任何组织或者个人不得以丑化、污损，或者利用信息技术手段伪造等方式侵害他人的肖像权。未经肖像权人同意，不得制作、使用、公开肖像权人的肖像，但是法律另有规">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SO-VITS-SVC 4.0 全流程教程">
+<meta property="og:url" content="https://lemonmiaow.xyz/2024/02/22/SO-VITS-SVC%204.0%E5%85%A8%E6%B5%81%E7%A8%8B%E6%95%99%E7%A8%8B/index.html">
+<meta property="og:site_name" content="ちゃおにま">
+<meta property="og:description" content="SO-VITS-SVC 4.0 全流程教程 本篇目为项目SO-VITS-SVC 4.0的预处理及训练、推理提供相关教程，建议用于参考而非完全使用。本文章不是生活必需品，您也可以直接使用官方文档  法律条例参考及免责声明 《民法典》 第一千零一十九条 任何组织或者个人不得以丑化、污损，或者利用信息技术手段伪造等方式侵害他人的肖像权。未经肖像权人同意，不得制作、使用、公开肖像权人的肖像，但是法律另有规">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lemonmiaow.xyz/img/banner/002.jpg">
+<meta property="article:published_time" content="2024-02-22T05:06:47.263Z">
+<meta property="article:modified_time" content="2024-02-22T05:06:47.263Z">
+<meta property="article:author" content="Lemon_miaow">
+<meta property="article:tag" content="SO-VITS-SVC">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://lemonmiaow.xyz/img/banner/002.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>SO-VITS-SVC 4.0 全流程教程 - ちゃおにま</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"lemonmiaow.xyz","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"#"},"progressbar":{"enable":true,"height_px":3,"color":"#FFA500","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>ちゃおにま</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/features/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>工具</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/banner.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.2)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">SO-VITS-SVC 4.0 全流程教程</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-02-22 13:06" pubdate>
+          2024年2月22日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          41 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">SO-VITS-SVC 4.0 全流程教程</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1>SO-VITS-SVC 4.0 全流程教程</h1>
+<p>本篇目为项目<a target="_blank" rel="noopener" href="https://github.com/svc-develop-team/so-vits-svc">SO-VITS-SVC 4.0</a>的预处理及训练、推理提供相关教程，建议用于参考而非完全使用。<s>本文章不是生活必需品</s>，您也可以直接使用<a target="_blank" rel="noopener" href="https://github.com/svc-develop-team/so-vits-svc/blob/4.0/README_zh_CN.md">官方文档</a></p>
+<hr>
+<h2 id="法律条例参考及免责声明">法律条例参考及免责声明</h2>
+<p><strong>《民法典》</strong></p>
+<p><strong>第一千零一十九条</strong></p>
+<p>任何组织或者个人不得以丑化、污损，或者利用信息技术手段伪造等方式侵害他人的肖像权。未经肖像权人同意，不得制作、使用、公开肖像权人的肖像，但是法律另有规定的除外。 未经肖像权人同意，肖像作品权利人不得以发表、复制、发行、出租、展览等方式使用或者公开肖像权人的肖像。 对自然人声音的保护，参照适用肖像权保护的有关规定。</p>
+<p><strong>第一千零二十四条</strong></p>
+<p>【名誉权】民事主体享有名誉权。任何组织或者个人不得以侮辱、诽谤等方式侵害他人的名誉权。</p>
+<p><strong>第一千零二十七条</strong></p>
+<p>【作品侵害名誉权】行为人发表的文学、艺术作品以真人真事或者特定人为描述对象，含有侮辱、诽谤内容，侵害他人名誉权的，受害人有权依法请求该行为人承担民事责任。 行为人发表的文学、艺术作品不以特定人为描述对象，仅其中的情节与该特定人的情况相似的，不承担民事责任。</p>
+<p><strong><u>请自行解决数据集授权问题，禁止使用非授权数据集进行训练！任何由于使用非授权数据集进行训练造成的问题，需自行承担全部责任和后果！与仓库、仓库维护者、svc develop team 、本教程撰写者无关！</u></strong></p>
+<hr>
+<h2 id="1-环境依赖">1.环境依赖</h2>
+<blockquote>
+<p>Python &lt;= 3.10</p>
+<p>NVIDIA-CUDA &lt;= 11.8</p>
+<p>Pytorch &lt;= 2.0<br>
+FFmpeg</p>
+<p><em>依赖库</em></p>
+</blockquote>
+<h3 id="Python">Python</h3>
+<p>前往<a target="_blank" rel="noopener" href="https://www.python.org/">Python官网</a>下载Python，版本需要低于3.10，目前暂不支持Python3.11。</p>
+<p>安装完成后请输入<code>python -V</code>确认所安装的python版本。</p>
+<p>如果你实在不会，可参阅此文章：<a target="_blank" rel="noopener" href="https://www.runoob.com/python/python-install.html">Python 环境搭建 | 菜鸟教程</a></p>
+<h3 id="CUDA">CUDA</h3>
+<p>在控制台中输入<code>nvidia-smi</code> 查看显卡驱动并检查所安装的CUDA版本。</p>
+<p>若你未安装CUDA，请前往<a target="_blank" rel="noopener" href="https://developer.nvidia.com/cuda-11-7-0-download-archive">这里</a>选择你所使用机器的对应版本下载安装。</p>
+<h3 id="Pytorch">Pytorch</h3>
+<p>安装Pytorch请注意所安装的CUDA版本，在<a target="_blank" rel="noopener" href="https://pytorch.org/get-started/locally/">Pytorch安装页</a>选择对应的Pytorch版本，不同CUDA版本的安装命令有所不同。<strong>若版本不正确会导致Pytorch不能正常运行。</strong> 运行命令后将会自动安装<code>torch</code> <code>torchvision</code> <code>torchaudio</code>三个pypi包。</p>
+<img src="file:///C:/Users/lemon/AppData/Roaming/marktext/images/2023-03-19-21-05-59-image.png" srcset="/img/loading.gif" lazyload title="" alt="" data-align="center">
+<p>运行命令安装后请完成以下步骤检查Pytorch的运行情况</p>
+<ol>
+<li>
+<p>在控制台中输入<code>python</code>进入交互式解释器。</p>
+</li>
+<li>
+<p>输入以下命令并检查返回结果</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">&gt;</span><span class="language-bash">&gt;&gt;import torch    <span class="hljs-comment"># 如正常则静默</span></span><br><span class="hljs-meta prompt_">&gt;</span><span class="language-bash">&gt;&gt;torch.cuda.is_available()</span><br>True<br></code></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>若返回结果不为<code>True</code>而为<code>False</code>，则需要重新安装直至返回值为<code>True</code>以表示目前GPU已可被正常使用。</p>
+<p><code>False</code>表示Pytorch无法正常调用GPU。</p>
+<p>如果你所使用的环境曾经使用过其他使用了Pytorch的项目，请注意Pytorch版本与例如Xformers等的其他程序是否冲突。</p>
+<h3 id="FFmpeg">FFmpeg</h3>
+<p>前往<a target="_blank" rel="noopener" href="https://ffmpeg.org/">FFmpeg官网</a>下载并解压，然后前往<u>系统环境变量</u>并在Path中添加FFmpeg解压后bin目录的位置[<code>.\ffmpeg\bin</code>]，完成后在控制台中输入ffmpeg确认是否有输出。</p>
+<h2 id="2-训练">2.训练</h2>
+<h3 id="2-1-获取源码">2.1 获取源码</h3>
+<p>前往<a target="_blank" rel="noopener" href="https://github.com/svc-develop-team/so-vits-svc">so-vits-svc</a>项目仓库<strong>4.0</strong>分支获取源码，或直接clone以下地址获取主要分支源码</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git@github.com:svc-develop-team/so-vits-svc.git<br></code></pre></td></tr></table></figure>
+<h3 id="2-2-获取预先下载的模型文件">2.2 获取预先下载的模型文件</h3>
+<h4 id="必须项">必须项</h4>
+<ul>
+<li>contentvec ：<a target="_blank" rel="noopener" href="https://ibm.box.com/s/z1wgl1stco8ffooyatzdwsqn2psd9lrr">checkpoint_best_legacy_500.pt</a>
+<ul>
+<li>放在<code>hubert</code>目录下</li>
+</ul>
+</li>
+</ul>
+<h4 id="可选项（建议使用）">可选项（建议使用）</h4>
+<ul>
+<li>预训练底模文件： <code>G_0.pth</code> <code>D_0.pth</code>
+<ul>
+<li>放在<code>logs/44k</code>目录下</li>
+</ul>
+</li>
+</ul>
+<p>目前<code>G_0.pth</code> 及 <code>D_0.pth</code> （底模）没有官方获得途径，请自行寻找获取方式。</p>
+<p>本文章撰写者在HuggingFace上找到了个不知道是什么的链接，可以看看，里面是什么我真的不知道.jpg <a target="_blank" rel="noopener" href="https://huggingface.co/justinjohn-03/so-vits-svc-4.0/tree/main">justinjohn-03/so-vits-svc-4.0 at main</a></p>
+<p><em>虽然底模一般不会引起什么版权问题，但还是请注意一下，比如事先询问作者，又或者作者在模型描述中明确写明了可行的用途。</em></p>
+<h3 id="2-3-数据集准备">2.3 数据集准备</h3>
+<p>准备的训练数据，格式尽量为wav，不同的说话人建立不同的文件夹，每条语音控制在30秒内，确保语音不要有噪音或尽量降低噪音，一个文件夹内语音必须是一个人说的，<strong>语音的质量比起数量来说更重要</strong>。</p>
+<p>将准备好的语音文件以以下文件结构将数据集放入<code>dataset_raw</code>目录中</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs ?">dataset_raw<br>├───speaker0<br>│   ├───xxx1-xxx1.wav<br>│   ├───...<br>│   └───Lxx-0xx8.wav<br>└───speaker1<br>    ├───xx2-0xxx2.wav<br>    ├───...<br>    └───xxx7-xxx007.wav<br></code></pre></td></tr></table></figure>
+<p>完成后需要在<code>.\dataset_raw</code>文件夹内新建并编辑<code>config.json</code>，代码如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-attr">&quot;n_speakers&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">10</span>    <span class="hljs-comment">//修改数字为说话人的人数</span><br><span class="hljs-attr">&quot;spk&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;speaker0&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span>  <span class="hljs-comment">//修改speaker0为说话人的名字，需要和文件夹名字一样</span><br>    <span class="hljs-attr">&quot;speaker1&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>  <span class="hljs-comment">//值为编号</span><br>    <span class="hljs-attr">&quot;taoxisama&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">2</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;YajuuSenpai&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">3</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;xxx&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">4</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-comment">//以此类推</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+<h3 id="2-4数据预处理">2.4数据预处理</h3>
+<p><em>以下步骤若出现报错请多次尝试，若一直报错则是环境依赖问题，可以根据报错内容使用搜索引擎查找解决方案或重新安装对应的库。</em></p>
+<ol>
+<li>重采样至 44100hz</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">python resample.py<br></code></pre></td></tr></table></figure>
+<ol start="2">
+<li>自动划分训练集 验证集 测试集 以及自动生成配置文件</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">python preprocess_flist_config.py<br></code></pre></td></tr></table></figure>
+<ol start="3">
+<li>生成hubert与f0</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">python preprocess_hubert_f0.py<br></code></pre></td></tr></table></figure>
+<p>执行完以上步骤后 dataset 目录便是预处理完成的数据，可以删除<code>dataset_raw</code>文件夹了。</p>
+<h3 id="2-5训练">2.5训练</h3>
+<p>可根据需求修改<code>.\config\config.json</code> 配置文件中<code>train</code>下的相关值以调整训练参数。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-attr">&quot;train&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;log_interval&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">200</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;eval_interval&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1000</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;seed&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1234</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;epochs&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">10000</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">//训练次数</span><br>    <span class="hljs-attr">&quot;learning_rate&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0.0001</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">//训练率，不建议过高，建议0.0001</span><br></code></pre></td></tr></table></figure>
+<p>运行以下命令开始训练</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">python train.py -c configs/config.json -m 44k<br></code></pre></td></tr></table></figure>
+<p>训练时会自动清除老的模型，只保留最新3个模型，如果想防止过拟合可以修改配置文件<code>keep_ckpts 0</code>为永不清除。</p>
+<p>一般情况下训练6000次就能得到一个不错的声音模型（有时可能训练出的模型会导致输出僵尸音，需要重新训练，<em>可能尸变是概率事件</em>）。</p>
+<h3 id="2-6推理">2.6推理</h3>
+<h5 id="2-6-1-分离人声">2.6.1 分离人声</h5>
+<ul>
+<li>
+<p>将需要推理的原歌曲文件处理为干声（人声），推荐使用<a target="_blank" rel="noopener" href="https://github.com/Anjok07/ultimatevocalremovergui">UVR5</a>分离人声。</p>
+</li>
+<li>
+<p>将人声分割为若干个不长于40秒的片段，放入<code>.\raw</code>文件夹中。可使用FFmpeg进行分割。</p>
+</li>
+</ul>
+<hr>
+<p><em>以下是使用FFmpeg进行分割的示例：</em></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ffmpeg -i &quot;simpal_raw.mp3&quot; -f segment -segment_time 30 -map 0 -c copy %03d.wav<br></code></pre></td></tr></table></figure>
+<p>该命令将会把原始文件分割为多个最长为30秒的文件。</p>
+<hr>
+<p><em>以下是UVR5分离人声推荐步骤：（如果没有下列步骤的模型请在UVR5中下载）</em></p>
+<ul>
+<li><strong>第一步处理：</strong></li>
+</ul>
+<ol>
+<li>
+<p>Process Method: Demucs</p>
+</li>
+<li>
+<p>Stem: Vocals</p>
+</li>
+<li>
+<p>Demucs Model: v3|UVR-Model-1</p>
+</li>
+<li>
+<p>勾选 GPU Conversion (使用GPU)</p>
+</li>
+<li>
+<p>Start</p>
+</li>
+</ol>
+<ul>
+<li><strong>第二部处理（进一步消除混响与和声）：</strong></li>
+</ul>
+<ol>
+<li>
+<p>选择第一步处理后的纯人声文件</p>
+</li>
+<li>
+<p>Process Method: VR Architecture</p>
+</li>
+<li>
+<p>Windows Size: 320</p>
+</li>
+<li>
+<p>Aggression: 10</p>
+</li>
+<li>
+<p>VR Model: 5_HP_Karaoke_UVR</p>
+</li>
+<li>
+<p>勾选 GPU Conversion (使用GPU)</p>
+</li>
+<li>
+<p>勾选 Vocals Only</p>
+</li>
+<li>
+<p>Start</p>
+</li>
+</ol>
+<p>该方法能尽可能提取出歌曲中较为干净的人声</p>
+<hr>
+<h5 id="2-6-2-开始推理">2.6.2 开始推理</h5>
+<ul>
+<li>使用 <code>inference_main.py</code></li>
+</ul>
+<p>4.0版本的推理增加了命令行支持</p>
+<p>建议直接修改项目目录下的<code>inference_main.py</code> 文件。（见文件中注释对应修改，不建议修改<code>#不用动的部分</code>的内容）</p>
+<p>训练模型建议选择最后生成的<code>G_xxx.pth</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">python inference_main.py<br></code></pre></td></tr></table></figure>
+<p>你也可以使用命令行参数进行推理</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">例</span><br>python inference_main.py -m &quot;logs/44k/G_30400.pth&quot; -c &quot;configs/config.json&quot; -n &quot;君の知らない物語-src.wav&quot; -t 0 -s &quot;nen&quot;<br></code></pre></td></tr></table></figure>
+<p>必填项部分</p>
+<ul>
+<li>-m, --model_path：模型路径。</li>
+<li>-c, --config_path：配置文件路径。</li>
+<li>-n, --clean_names：wav 文件名列表，放在 raw 文件夹下。</li>
+<li>-t, --trans：音高调整，支持正负（半音）。</li>
+<li>-s, --spk_list：合成目标说话人名称。</li>
+</ul>
+<p>可选项部分：见下一节</p>
+<ul>
+<li>-a, --auto_predict_f0：语音转换自动预测音高，转换歌声时不要打开这个会严重跑调。</li>
+<li>-cm, --cluster_model_path：聚类模型路径，如果没有训练聚类则随便填。</li>
+<li>-cr, --cluster_infer_ratio：聚类方案占比，范围 0-1，若没有训练聚类模型则填 0 即可。</li>
+</ul>
+<p><strong>推理生成所得音频文件在<code>.\results</code>目录中。</strong></p>
+<h3 id="2-7（可选）增强">2.7（可选）增强</h3>
+<p><em>以下摘自官方文档</em></p>
+<p>如果前面的效果已经满意，或者没看明白下面在讲啥，那后面的内容都可以忽略，不影响模型使用(这些可选项影响比较小，可能在某些特定数据上有点效果，但大部分情况似乎都感知不太明显)</p>
+<h4 id="自动f0预测">自动f0预测</h4>
+<p>4.0模型训练过程会训练一个f0预测器，对于语音转换可以开启自动音高预测，如果效果不好也可以使用手动的，但转换歌声时请不要启用此功能！！！会严重跑调！！</p>
+<ul>
+<li>在<code>inference_main</code>中设置<code>auto_predict_f0</code>为<code>true</code>即可</li>
+</ul>
+<h4 id="聚类音色泄漏控制">聚类音色泄漏控制</h4>
+<p>介绍：聚类方案可以减小音色泄漏，使得模型训练出来更像目标的音色（但其实不是特别明显），但是单纯的聚类方案会降低模型的咬字（会口齿不清）（这个很明显），本模型采用了融合的方式， 可以线性控制聚类方案与非聚类方案的占比，也就是可以手动在&quot;像目标音色&quot; 和 “咬字清晰” 之间调整比例，找到合适的折中点。</p>
+<p>使用聚类前面的已有步骤不用进行任何的变动，只需要额外训练一个聚类模型，虽然效果比较有限，但训练成本也比较低</p>
+<ul>
+<li>训练过程：
+<ul>
+<li>使用cpu性能较好的机器训练，据我的经验在腾讯云6核cpu训练每个speaker需要约4分钟即可完成训练</li>
+<li>执行<code>python cluster/train_cluster.py</code> ，模型的输出会在 <code>logs/44k/kmeans_10000.pt</code></li>
+</ul>
+</li>
+<li>推理过程：
+<ul>
+<li><code>inference_main</code>中指定<code>cluster_model_path</code></li>
+<li><code>inference_main</code>中指定<code>cluster_infer_ratio</code>，0为完全不使用聚类，1为只使用聚类，通常设置0.5即可</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-后期处理">3.后期处理</h2>
+<p>将生成的干音和歌曲伴奏（也可以通过UVR5提取）导入音频处理软件（如Au等）进行混音和母带处理，最终得到成品。</p>
+<p><em><strong>祝你武运昌隆！</strong></em></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/SO-VITS-SVC/">#SO-VITS-SVC</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>SO-VITS-SVC 4.0 全流程教程</div>
+      <div>https://lemonmiaow.xyz/2024/02/22/SO-VITS-SVC 4.0全流程教程/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Lemon_miaow</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年2月22日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                    <i class="iconfont icon-nc"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/02/22/%5B%E8%BD%AC%E8%BD%BD%5DSO-VITS-SVC%203.0%E8%AF%A6%E7%BB%86%E5%AE%89%E8%A3%85%E3%80%81%E8%AE%AD%E7%BB%83%E3%80%81%E6%8E%A8%E7%90%86%E4%BD%BF%E7%94%A8%E6%AD%A5%E9%AA%A4/" title="【转载】SO-VITS-SVC 3.0 详细安装、训练、推理使用步骤">
+                        <span class="hidden-mobile">【转载】SO-VITS-SVC 3.0 详细安装、训练、推理使用步骤</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Powered by Hexo</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/custom/t.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

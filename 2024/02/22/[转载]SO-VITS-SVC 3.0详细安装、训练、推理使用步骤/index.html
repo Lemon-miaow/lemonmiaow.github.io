@@ -1,0 +1,1023 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/bilicard.css">
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/icon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#00000000">
+  <meta name="author" content="Lemon_miaow">
+  <meta name="keywords" content="Lemon_miaow">
+  
+    <meta name="description" content="SO-VITS-SVC 3.0详细安装、训练、推理使用步骤 本帮助文档为项目 so-vits-svc 的详细中文安装、调试、推理教程，您也可以直接选择官方README文档 撰写：Sucial 点击跳转B站主页 注：本文章所讲解的是so-vits-svc 3.0的版本，可能不适用于4.0版本的so-vits-svc  1. 环境依赖   本项目需要的环境： NVIDIA-CUDA Python &amp;l">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【转载】SO-VITS-SVC 3.0 详细安装、训练、推理使用步骤">
+<meta property="og:url" content="https://lemonmiaow.xyz/2024/02/22/[%E8%BD%AC%E8%BD%BD]SO-VITS-SVC%203.0%E8%AF%A6%E7%BB%86%E5%AE%89%E8%A3%85%E3%80%81%E8%AE%AD%E7%BB%83%E3%80%81%E6%8E%A8%E7%90%86%E4%BD%BF%E7%94%A8%E6%AD%A5%E9%AA%A4/index.html">
+<meta property="og:site_name" content="ちゃおにま">
+<meta property="og:description" content="SO-VITS-SVC 3.0详细安装、训练、推理使用步骤 本帮助文档为项目 so-vits-svc 的详细中文安装、调试、推理教程，您也可以直接选择官方README文档 撰写：Sucial 点击跳转B站主页 注：本文章所讲解的是so-vits-svc 3.0的版本，可能不适用于4.0版本的so-vits-svc  1. 环境依赖   本项目需要的环境： NVIDIA-CUDA Python &amp;l">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lemonmiaow.xyz/img/banner/002.jpg">
+<meta property="article:published_time" content="2024-02-22T05:06:47.263Z">
+<meta property="article:modified_time" content="2024-02-22T05:06:47.263Z">
+<meta property="article:author" content="Lemon_miaow">
+<meta property="article:tag" content="SO-VITS-SVC">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://lemonmiaow.xyz/img/banner/002.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>【转载】SO-VITS-SVC 3.0 详细安装、训练、推理使用步骤 - ちゃおにま</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"lemonmiaow.xyz","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"#"},"progressbar":{"enable":true,"height_px":3,"color":"#FFA500","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>ちゃおにま</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/features/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>工具</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/banner.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.2)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">【转载】SO-VITS-SVC 3.0 详细安装、训练、推理使用步骤</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-02-22 13:06" pubdate>
+          2024年2月22日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          15k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          129 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">【转载】SO-VITS-SVC 3.0 详细安装、训练、推理使用步骤</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1>SO-VITS-SVC 3.0详细安装、训练、推理使用步骤</h1>
+<p>本帮助文档为项目 <a target="_blank" rel="noopener" href="https://github.com/innnky/so-vits-svc">so-vits-svc</a> 的详细中文安装、调试、推理教程，您也可以直接选择官方<a target="_blank" rel="noopener" href="https://github.com/innnky/so-vits-svc#readme">README</a>文档<br>
+撰写：Sucial <a target="_blank" rel="noopener" href="https://space.bilibili.com/445022409">点击跳转B站主页</a></p>
+<p><strong>注：本文章所讲解的是so-vits-svc <u>3.0</u>的版本，可能不适用于<u>4.0</u>版本的so-vits-svc</strong></p>
+<hr>
+<h2 id="1-环境依赖">1. 环境依赖</h2>
+<blockquote>
+<ul>
+<li><strong>本项目需要的环境：</strong><br>
+NVIDIA-CUDA<br>
+Python &lt;= 3.10<br>
+Pytorch<br>
+FFmpeg</li>
+</ul>
+</blockquote>
+<h3 id="Cuda">- Cuda</h3>
+<ul>
+<li>
+<p>在cmd控制台里输入<code>nvidia-smi.exe</code>以查看显卡驱动版本和对应的cuda版本</p>
+</li>
+<li>
+<p>前往 <a target="_blank" rel="noopener" href="https://developer.nvidia.com/">NVIDIA-Developer</a> 官网下载与系统<strong>对应</strong>的Cuda版本<br>
+以<code>Cuda-11.7</code>版本为例（<strong>注：本文下述所有配置均在<code>Cuda-11.7</code>下演示</strong>）<a target="_blank" rel="noopener" href="https://developer.nvidia.com/cuda-11-7-0-download-archive?target_os=Windows&amp;target_arch=x86_64&amp;target_version=11&amp;target_type=exe_local">Cuda11.7下载地址</a> 根据自己的系统和需求选择安装（一般本地Windows用户请依次选择<code>Windows</code>, <code>x86_64</code>, <code>系统版本</code>, <code>exe(local)</code>）</p>
+</li>
+<li>
+<p>安装成功之后在cmd控制台中输入<code>nvcc -V</code>, 出现类似以下内容则安装成功：</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">nvcc: NVIDIA (R) Cuda compiler driver<br>Copyright (c) 2005-2022 NVIDIA Corporation<br>Built on Tue_May__3_19:00:59_Pacific_Daylight_Time_2022<br>Cuda compilation tools, release 11.7, V11.7.64<br>Build cuda_11.7.r11.7/compiler.31294372_0<br></code></pre></td></tr></table></figure>
+<h4 id="特别注意！"><strong>特别注意！</strong></h4>
+<ul>
+<li>目前为止pytorch最高支持到<code>cuda11.7</code></li>
+<li>如果您在上述第一步中查看到自己的Cuda版本&gt;11.7，请依然选择11.7进行下载安装（Cuda有版本兼容性）并且安装完成后再次在cmd输入<code>nvidia-smi.exe</code>并不会出现cuda版本变化，即任然显示的是&gt;11,7的版本</li>
+<li>**Cuda的卸载方法：**打开控制面板-程序-卸载程序，将带有<code>NVIDIA CUDA</code>的程序全部卸载即可（一共5个）</li>
+</ul>
+<h3 id="Python">- Python</h3>
+<ul>
+<li>前往 <a target="_blank" rel="noopener" href="https://www.python.org/">Python官网</a> 下载Python，版本需要低于3.10（详细安装方法以及添加Path此处省略，网上随便一查都有）</li>
+<li>安装完成后在cmd控制台中输入<code>python</code>出现类似以下内容则安装成功：</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">Python 3.10.4 (tags/v3.10.4:9d38120, Mar 23 2022, 23:13:41) [MSC v.1929 64 bit (AMD64)] on win32<br>Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.<br><span class="hljs-meta prompt_">&gt;</span><span class="language-bash">&gt;&gt;</span> <br></code></pre></td></tr></table></figure>
+<ul>
+<li>配置python下载镜像源（有国外网络条件可跳过）<br>
+在cmd控制台依次执行</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">设置清华大学下载镜像</span><br>pip config set global.index-url http://pypi.tuna.tsinghua.edu.cn/simple<br>pip config set global.trusted-host pypi.tuna.tsinghua.edu.cn<br></code></pre></td></tr></table></figure>
+<h4 id="安装依赖库">安装依赖库</h4>
+<ul>
+<li>在任意位置新建名为<code>requirements.txt</code>的文本文件，输入以下内容保存</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs shell">Flask==2.1.2<br>Flask_Cors==3.0.10<br>gradio==3.4.1<br>numpy==1.23.5<br>playsound==1.3.0<br>PyAudio==0.2.12<br>pydub==0.25.1<br>pyworld==0.3.2<br>requests==2.28.1<br>scipy==1.10.0<br>sounddevice==0.4.5<br>SoundFile==0.10.3.post1<br>starlette==0.19.1<br>tqdm==4.63.0<br>scikit-maad<br>praat-parselmouth<br>tensorboard<br>librosa<br></code></pre></td></tr></table></figure>
+<ul>
+<li>在该文本文件所处文件夹内右击空白处选择 <strong>在终端中打开</strong> 并执行下面命令以安装库（若出现报错请尝试用<code>pip install [库名称]</code>重新单独安装直至成功）</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">pip install -r requirements.txt<br></code></pre></td></tr></table></figure>
+<ul>
+<li>接下来我们需要<strong>单独安装</strong><code>torch</code>, <code>torchaudio</code>, <code>torchvision</code>这三个库，下面提供两种方法</li>
+</ul>
+<h4 id="方法1（便捷但不建议，因为我在测试这种方法过程中发现有问题，对后续配置AI有影响">方法1（便捷但不建议，因为我在测试这种方法过程中发现有问题，对后续配置AI有影响</h4>
+<blockquote>
+<p>直接前往 <a target="_blank" rel="noopener" href="https://pytorch.org/get-started/locally/">Pytorch官网</a> 选择所需版本然后复制Run this Command栏显示的命令至cmd安装（不建议）</p>
+</blockquote>
+<h4 id="方法2（较慢但稳定，建议）">方法2（较慢但稳定，建议）</h4>
+<ul>
+<li>
+<p>前往该地址使用<code>Ctrl+F</code>搜索直接下载whl包 <a target="_blank" rel="noopener" href="https://download.pytorch.org/whl/">点击前往</a></p>
+<blockquote>
+<ul>
+<li>这个项目需要的是<br>
+<code>torch==1.10.0+cu113</code><br>
+<code>torchaudio==0.10.0+cu113</code><br>
+1.10.0 和0.10.0表示是pytorch版本，cu113表示cuda版本11.3<br>
+以此类推，请选择<strong>适合自己的版本</strong>安装</li>
+</ul>
+</blockquote>
+</li>
+<li>
+<p><strong>下面我将以<code>Cuda11.7</code>版本为例</strong><br>
+<em><strong>–示例开始–</strong></em></p>
+<blockquote>
+<ul>
+<li>我们需要安装以下三个库</li>
+</ul>
+<ol>
+<li><code>torch-1.13.0+cu117</code> 点击下载：<a target="_blank" rel="noopener" href="https://download.pytorch.org/whl/cu117/torch-1.13.0%2Bcu117-cp310-cp310-win_amd64.whl">torch-1.13.0+cu117-cp310-cp310-win_amd64.whl</a><br>
+其中cp310指<code>python3.10</code>, <code>win-amd64</code>表示windows 64位操作系统</li>
+<li><code>torchaudio-0.13.0+cu117</code>点击下载：<a target="_blank" rel="noopener" href="https://download.pytorch.org/whl/cu117/torchaudio-0.13.0%2Bcu117-cp310-cp310-win_amd64.whl">torchaudio-0.13.0+cu117-cp310-cp310-win_amd64.whl</a></li>
+<li><code>torchvision-0.14.0+cu117</code>点击下载：<a target="_blank" rel="noopener" href="https://download.pytorch.org/whl/cu117/torchvision-0.14.0%2Bcu117-cp310-cp310-win_amd64.whl">torchvision-0.14.0+cu117-cp310-cp310-win_amd64.whl</a></li>
+</ol>
+</blockquote>
+</li>
+<li>
+<p>下载完成后进入进入下载的whl文件的目录，在所处文件夹内右击空白处选择 <strong>在终端中打开</strong> 并执行下面命令以安装库</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">pip install .\torch-1.13.0+cu117-cp310-cp310-win_amd64.whl<br><span class="hljs-meta prompt_"># </span><span class="language-bash">回车运行(安装时间较长)</span><br>pip install .\torchaudio-0.13.0+cu117-cp310-cp310-win_amd64.whl<br><span class="hljs-meta prompt_"># </span><span class="language-bash">回车运行</span><br>pip install .\torchvision-0.14.0+cu117-cp310-cp310-win_amd64.whl <br><span class="hljs-meta prompt_"># </span><span class="language-bash">回车运行</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li>务必在出现<code>Successfully installed ...</code>之后再执行下一条命令，第一个torch包安装时间较长<br>
+<em><strong>–示例结束–</strong></em></li>
+</ul>
+<p>安装完<code>torch</code>, <code>torchaudio</code>, <code>torchvision</code>这三个库之后，在cmd控制台运用以下命令检测cuda与torch版本是否匹配</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell">python<br><span class="hljs-meta prompt_"># </span><span class="language-bash">回车运行</span><br>import torch<br><span class="hljs-meta prompt_"># </span><span class="language-bash">回车运行</span><br>print(torch.__version__)<br><span class="hljs-meta prompt_"># </span><span class="language-bash">回车运行</span><br>print(torch.cuda.is_available())<br><span class="hljs-meta prompt_"># </span><span class="language-bash">回车运行</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li>最后一行出现<code>True</code>则成功，出现<code>False</code>则失败，需要重新安装</li>
+</ul>
+<h3 id="FFmpeg">- FFmpeg</h3>
+<ul>
+<li>前往 <a target="_blank" rel="noopener" href="https://ffmpeg.org/">FFmpeg官网</a> 下载。解压至任意位置并在高级系统设置-环境变量中添加Path定位至<code>.\ffmpeg\bin</code>（详细安装方法以及添加Path此处省略，网上随便一查都有）</li>
+<li>安装完成后在cmd控制台中输入<code>ffmpeg -version</code>出现类似以下内容则安装成功</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">ffmpeg version git-2020-08-12-bb59bdb Copyright (c) 2000-2020 the FFmpeg developers<br>built with gcc 10.2.1 (GCC) 20200805<br>configuration: [此处省略一大堆内容]<br>libavutil      56. 58.100 / 56. 58.100<br>libavcodec     58.100.100 / 58.100.100<br>...<br></code></pre></td></tr></table></figure>
+<h2 id="2-预训练AI">2. 预训练AI</h2>
+<h3 id="下载项目源码">- 下载项目源码</h3>
+<ul>
+<li>前往 <a target="_blank" rel="noopener" href="https://github.com/innnky/so-vits-svc">so-vits-svc</a> 选择<code>32k</code>分支（本教程针对<code>32k</code>）下载源代码。安装了git的可直接git以下地址</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git@github.com:innnky/so-vits-svc.git<br></code></pre></td></tr></table></figure>
+<ul>
+<li>解压到任意文件夹</li>
+</ul>
+<h3 id="下载预训练模型">- 下载预训练模型</h3>
+<ul>
+<li>这部分官方文档写得很详细，我这边直接引用</li>
+</ul>
+<blockquote>
+<p><strong>hubert</strong><br>
+<a target="_blank" rel="noopener" href="https://github.com/bshall/hubert/releases/download/v0.1/hubert-soft-0d54a1f4.pt">https://github.com/bshall/hubert/releases/download/v0.1/hubert-soft-0d54a1f4.pt</a><br>
+<strong>G与D预训练模型</strong><br>
+<a target="_blank" rel="noopener" href="https://huggingface.co/innnky/sovits_pretrained/resolve/main/G_0.pth">https://huggingface.co/innnky/sovits_pretrained/resolve/main/G_0.pth</a><br>
+<a target="_blank" rel="noopener" href="https://huggingface.co/innnky/sovits_pretrained/resolve/main/D_0.pth">https://huggingface.co/innnky/sovits_pretrained/resolve/main/D_0.pth</a></p>
+</blockquote>
+<ul>
+<li><code>hubert-soft-0d54a1f4.pt</code>放入<code>.\hubert</code>文件夹</li>
+<li><code>D_0.pth和G_0.pth</code>文件放入<code>.\logs\32k</code>文件夹</li>
+</ul>
+<h3 id="准备训练样本">- 准备训练样本</h3>
+<blockquote>
+<p>准备的训练数据，建议60-100条语音(<strong>格式务必为wav，不同的说话人建立不同的文件夹</strong>)，每条语音控制在<strong>4-8秒！</strong>（确保语音不要有噪音或尽量降低噪音，一个文件夹内语音必须是一个人说的），可以训练出效果不错的模型</p>
+</blockquote>
+<ul>
+<li>将语音连带文件夹（有多个人就多个文件夹）一起放入<code>.\dataset_raw</code>文件夹里，文件结构类似如下：</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell">dataset_raw<br>├───speaker0<br>│   ├───xxx1-xxx1.wav<br>│   ├───...<br>│   └───Lxx-0xx8.wav<br>└───speaker1<br>    ├───xx2-0xxx2.wav<br>    ├───...<br>    └───xxx7-xxx007.wav<br></code></pre></td></tr></table></figure>
+<ul>
+<li>此外还需要在<code>.\dataset_raw</code>文件夹内新建并编辑<code>config.json</code>，代码如下：</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell">&quot;n_speakers&quot;: 10    //修改数字为说话人的人数<br>&quot;spk&quot;:&#123;<br>    &quot;speaker0&quot;: 0,  //修改speaker0为第一个说话人的名字，需要和文件夹名字一样，后面的: 0, 不需要改<br>    &quot;speaker1&quot;: 1,  //以此类推<br>    &quot;speaker2&quot;: 2,<br>    //以此类推<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="样本预处理">- 样本预处理</h3>
+<h4 id="下面的所有步骤若出现报错请多次尝试，若一直报错就是第一部分环境依赖没有装到位，可以根据报错内容重新安装对应的库。（一般如果正确安装了的话出现报错请多次尝试或者关机重启，肯定可以解决报错的。）">下面的所有步骤若出现报错请多次尝试，若一直报错就是第一部分环境依赖没有装到位，可以根据报错内容重新安装对应的库。（一般如果正确安装了的话出现报错请多次尝试或者关机重启，肯定可以解决报错的。）</h4>
+<h4 id="1-重采样">1. 重采样</h4>
+<ul>
+<li>在<code>so-vits-svc</code>文件夹内运行终端，直接执行：</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">python resample.py<br></code></pre></td></tr></table></figure>
+<p><strong>注意：如果遇到如下报错：</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">...<br>E:\vs\so-vits-svc-32k\resample.py:17: FutureWarning: Pass sr=None as keyword args. From version 0.10 passing these as positional arguments will result in an error<br>  wav, sr = librosa.load(wav_path, None)<br>E:\vs\so-vits-svc-32k\resample.py:17: FutureWarning: Pass sr=None as keyword args. From version 0.10 passing these as positional arguments will result in an error<br>  wav, sr = librosa.load(wav_path, None)<br>...<br></code></pre></td></tr></table></figure>
+<p>请打开<code>resample.py</code>，修改第<code>17</code>行内容</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">第17行修改前如下</span><br>wav, sr = librosa.load(wav_path, None)<br><span class="hljs-meta prompt_"># </span><span class="language-bash">第17行修改后如下</span><br>wav, sr = librosa.load(wav_path, sr = None)<br></code></pre></td></tr></table></figure>
+<p>保存，重新执行<code>python resample.py</code>命令</p>
+<ul>
+<li>成功运行后，在<code>.\dataset\32k</code>文件夹中会有说话人的wav语音，之后<code>dataset_raw</code>文件夹就可以删除了</li>
+</ul>
+<h4 id="2-自动划分训练集，验证集，测试集，自动生成配置文件">2. 自动划分训练集，验证集，测试集，自动生成配置文件</h4>
+<ul>
+<li>在<code>so-vits-svc</code>文件夹内运行终端，直接执行：</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">python preprocess_flist_config.py<br></code></pre></td></tr></table></figure>
+<ul>
+<li>出现类似以下内容则处理成功：</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell">PS E:\vs\so-vits-svc-32k&gt; python preprocess_flist_config.py<br><span class="hljs-meta prompt_">100%</span><span class="language-bash">|██████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00&lt;00:00, 1993.49it/s]</span><br>Writing ./filelists/train.txt<br><span class="hljs-meta prompt_">100%</span><span class="language-bash">|██████████████████████████████████████████████████████████████████████████████████████████| 16/16 [00:00&lt;?, ?it/s]</span><br>Writing ./filelists/val.txt<br><span class="hljs-meta prompt_">100%</span><span class="language-bash">|████████████████████████████████████████████████████████████████████████████████████████████| 2/2 [00:00&lt;?, ?it/s]</span><br>Writing ./filelists/test.txt<br><span class="hljs-meta prompt_">100%</span><span class="language-bash">|████████████████████████████████████████████████████████████████████████████████████████████| 2/2 [00:00&lt;?, ?it/s]</span><br>Writing configs/config.json<br></code></pre></td></tr></table></figure>
+<h4 id="3-生成hubert和f0">3. 生成hubert和f0</h4>
+<ul>
+<li>在<code>so-vits-svc</code>文件夹内运行终端，直接执行：</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">python preprocess_hubert_f0.py<br></code></pre></td></tr></table></figure>
+<ul>
+<li>出现类似以下内容则处理成功：（我这里演示时只用了20条音频）</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs shell">PS E:\vs\so-vits-svc-32k&gt; python preprocess_hubert_f0.py<br>Loading hubert for content...<br>Loaded hubert.<br><span class="hljs-meta prompt_">  0%</span><span class="language-bash">|                                                                                  | 0/20 [00:00&lt;?, ?it/s]dataset/32k\speaker\1_01.wav</span><br><span class="hljs-meta prompt_">  5%</span><span class="language-bash">|████                                                                              | 1/20 [00:03&lt;01:00,  3.20s/it]dataset/32k\speaker\1_02.wav</span><br><span class="hljs-meta prompt_"> 10%</span><span class="language-bash">|████████                                                                          | 2/20 [00:03&lt;00:25,  1.40s/it]dataset/32k\speaker\1_03.wav</span><br><span class="hljs-meta prompt_"> 15%</span><span class="language-bash">|████████████                                                                      | 3/20 [00:03&lt;00:14,  1.19it/s]dataset/32k\speaker\1_04.wav</span><br><span class="hljs-meta prompt_"> 20%</span><span class="language-bash">|████████████████▌                                                                 | 4/20 [00:03&lt;00:09,  1.69it/s]dataset/32k\speaker\1_05.wav</span><br><span class="hljs-meta prompt_"> 25%</span><span class="language-bash">|████████████████████                                                              | 5/20 [00:03&lt;00:06,  2.39it/s]dataset/32k\speaker\1_06.wav</span><br><span class="hljs-meta prompt_"> 30%</span><span class="language-bash">|████████████████████████                                                          | 6/20 [00:04&lt;00:04,  2.98it/s]dataset/32k\speaker\1_07.wav</span><br><span class="hljs-meta prompt_"> 35%</span><span class="language-bash">|█████████████████████████████                                                     | 7/20 [00:04&lt;00:03,  3.48it/s]dataset/32k\speaker\1_08.wav</span><br><span class="hljs-meta prompt_"> 40%</span><span class="language-bash">|█████████████████████████████████                                                 | 8/20 [00:04&lt;00:03,  3.78it/s]dataset/32k\speaker\1_09.wav</span><br><span class="hljs-meta prompt_"> 45%</span><span class="language-bash">|█████████████████████████████████████                                             | 9/20 [00:04&lt;00:02,  4.13it/s]dataset/32k\speaker\1_10.wav</span><br><span class="hljs-meta prompt_"> 50%</span><span class="language-bash">|█████████████████████████████████████████                                         | 10/20 [00:04&lt;00:02,  4.41it/s]dataset/32k\speaker\1_11.wav</span><br><span class="hljs-meta prompt_"> 55%</span><span class="language-bash">|█████████████████████████████████████████████                                     | 11/20 [00:04&lt;00:01,  4.71it/s]dataset/32k\speaker\1_12.wav</span><br><span class="hljs-meta prompt_"> 60%</span><span class="language-bash">|█████████████████████████████████████████████████                                 | 12/20 [00:05&lt;00:01,  4.93it/s]dataset/32k\speaker\1_13.wav</span><br><span class="hljs-meta prompt_"> 65%</span><span class="language-bash">|█████████████████████████████████████████████████████                             | 13/20 [00:05&lt;00:01,  5.25it/s]dataset/32k\speaker\1_14.wav</span><br><span class="hljs-meta prompt_"> 70%</span><span class="language-bash">|█████████████████████████████████████████████████████████                         | 14/20 [00:05&lt;00:01,  5.46it/s]dataset/32k\speaker\1_15.wav</span><br><span class="hljs-meta prompt_"> 75%</span><span class="language-bash">|█████████████████████████████████████████████████████████████▌                    | 15/20 [00:05&lt;00:00,  6.19it/s]dataset/32k\speaker\1_16.wav</span><br><span class="hljs-meta prompt_"> 80%</span><span class="language-bash">|█████████████████████████████████████████████████████████████████▌                | 16/20 [00:05&lt;00:00,  5.84it/s]dataset/32k\speaker\1_17.wav</span><br><span class="hljs-meta prompt_"> 85%</span><span class="language-bash">|█████████████████████████████████████████████████████████████████████             | 17/20 [00:06&lt;00:00,  5.43it/s]dataset/32k\speaker\1_18.wav</span><br><span class="hljs-meta prompt_"> 90%</span><span class="language-bash">|█████████████████████████████████████████████████████████████████████████         | 18/20 [00:06&lt;00:00,  5.27it/s]dataset/32k\speaker\1_19.wav</span><br><span class="hljs-meta prompt_"> 95%</span><span class="language-bash">|█████████████████████████████████████████████████████████████████████████████     | 19/20 [00:06&lt;00:00,  5.26it/s]dataset/32k\speaker\1_20.wav</span><br><span class="hljs-meta prompt_">100%</span><span class="language-bash">|██████████████████████████████████████████████████████████████████████████████████| 20/20 [00:06&lt;00:00,  3.03it/s]</span><br></code></pre></td></tr></table></figure>
+<h4 id="4-修改配置文件和部分源代码">4. 修改配置文件和部分源代码</h4>
+<ul>
+<li>
+<p>打开上面第二步过程中生成的配置文件<code>.\configs\config.json</code>修改第<code>13</code>行代码<code>&quot;batch_size&quot;</code>的数值。这边解释一下<code>&quot;batch_size&quot;: 12,</code>数值12要根据自己电脑的显存（任务管理器-GPU-<strong>专用</strong>GPU内存）来调整</p>
+<blockquote>
+<ul>
+<li><strong>修改建议</strong><br>
+6G显存 建议修改成2或3<br>
+8G显存 建议修改成4<br>
+&quot;batch_size&quot;参数调小可以解决显存不够的问题</li>
+</ul>
+</blockquote>
+</li>
+<li>
+<p>修改<code>train.py</code></p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs Python"><span class="hljs-comment"># 第60行将nccl改成gloo（如果后续开始训练时gloo报错就改回nccl，一般不会报错）</span><br><span class="hljs-comment"># 修改前如下</span><br>    dist.init_process_group(backend=<span class="hljs-string">&#x27;nccl&#x27;</span>, init_method=<span class="hljs-string">&#x27;env://&#x27;</span>, world_size=n_gpus, rank=rank)<br><span class="hljs-comment"># 修改后如下</span><br>    dist.init_process_group(backend=<span class="hljs-string">&#x27;gloo&#x27;</span>, init_method=<span class="hljs-string">&#x27;env://&#x27;</span>, world_size=n_gpus, rank=rank)<br><br><span class="hljs-comment"># 第44行开始</span><br><span class="hljs-comment"># 修改前如下</span><br>    n_gpus = torch.cuda.device_count()<br>    os.environ[<span class="hljs-string">&#x27;MASTER_ADDR&#x27;</span>] = <span class="hljs-string">&#x27;localhost&#x27;</span><br>    os.environ[<span class="hljs-string">&#x27;MASTER_PORT&#x27;</span>] = hps.train.port<br><span class="hljs-comment">#修改后增加代码后如下</span><br>    n_gpus = torch.cuda.device_count()<br>    os.environ[<span class="hljs-string">&#x27;MASTER_ADDR&#x27;</span>] = <span class="hljs-string">&#x27;localhost&#x27;</span><br>    os.environ[<span class="hljs-string">&#x27;MASTER_PORT&#x27;</span>] = hps.train.port<br>    os.environ[<span class="hljs-string">&quot;CUDA_VISIBLE_DEVICES&quot;</span>] = <span class="hljs-string">&quot;0&quot;</span>    <span class="hljs-comment"># 这里的0代表GPU0是用来训练的显卡，不知道是0还是1的可以在任务管理器查看，如果是双显卡的话一定要选择适合的显卡</span><br>    os.environ[<span class="hljs-string">&quot;PYTORCH_CUDA_ALLOC_CONF&quot;</span>] = <span class="hljs-string">&quot;max_split_size_mb:32&quot;</span>  <span class="hljs-comment"># 这里的32如果懂的话也可以修改，不懂别改</span><br></code></pre></td></tr></table></figure>
+<h2 id="3-开始训练">3. 开始训练</h2>
+<ul>
+<li>在<code>so-vits-svc</code>文件夹内运行终端，直接执行下面命令开始训练<br>
+<strong>注意：开始训练前建议重启一下电脑清理内存和显存，并且关闭后台游戏，动态壁纸等等软件，最好只留一个cmd窗口</strong></li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">python train.py -c configs/config.json -m 32k<br></code></pre></td></tr></table></figure>
+<ul>
+<li>出现以下报错就是显存不够了</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">torch.cuda.OutOfMemoryError: CUDA out of menory. Tried to allocate 16.80 MiB (GPU 0; 8.0 GiB total capacity; 7.11 Gi8 already allocated; 0 bytes free; 7.30 GiB reserved in total by PyTorch) If reserved memory is &gt;&gt; allocated memory try setting max_split_size_mb to avoid fragmentation. See documentation for Memory Management and PYTORCH_cUDA_ALLOC_CONF<br><span class="hljs-meta prompt_"># </span><span class="language-bash">注意：一定是 0 bytes free &lt; Tried to allocate 16.80 MiB 才是显存不足，不然就是别的问题</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li><strong>这边报错可能会比较多，如果出现报错先尝试重新执行<code>python train.py -c configs/config.json -m 32k</code>，多重试几遍，或者关机重启，一般是会成功的。如果报错一直是同一个报错，那就是对应的那里出问题了（要靠报错找问题所在）</strong></li>
+<li>成功执行以后应该是类似如下内容：</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs shell">2023-02-08 18:07:42,439 32k INFO &#123;&#x27;train&#x27;: &#123;&#x27;log_interval&#x27;: 200, &#x27;eval_interval&#x27;: 1000, &#x27;seed&#x27;: 1234, &#x27;epochs&#x27;: 10000, &#x27;learning_rate&#x27;: 0.0001, &#x27;betas&#x27;: [0.8, 0.99], &#x27;eps&#x27;: 1e-09, &#x27;batch_size&#x27;: 2, &#x27;fp16_run&#x27;: False, &#x27;lr_decay&#x27;: 0.999875, &#x27;segment_size&#x27;: 17920, &#x27;init_lr_ratio&#x27;: 1, &#x27;warmup_epochs&#x27;: 0, &#x27;c_mel&#x27;: 45, &#x27;c_kl&#x27;: 1.0, &#x27;use_sr&#x27;: True, &#x27;max_speclen&#x27;: 384, &#x27;port&#x27;: &#x27;8001&#x27;&#125;, &#x27;data&#x27;: &#123;&#x27;training_files&#x27;: &#x27;filelists/train.txt&#x27;, &#x27;validation_files&#x27;: &#x27;filelists/val.txt&#x27;, &#x27;max_wav_value&#x27;: 32768.0, &#x27;sampling_rate&#x27;: 32000, &#x27;filter_length&#x27;: 1280, &#x27;hop_length&#x27;: 320, &#x27;win_length&#x27;: 1280, &#x27;n_mel_channels&#x27;: 80, &#x27;mel_fmin&#x27;: 0.0, &#x27;mel_fmax&#x27;: None&#125;, &#x27;model&#x27;: &#123;&#x27;inter_channels&#x27;: 192, &#x27;hidden_channels&#x27;: 192, &#x27;filter_channels&#x27;: 768, &#x27;n_heads&#x27;: 2, &#x27;n_layers&#x27;: 6, &#x27;kernel_size&#x27;: 3, &#x27;p_dropout&#x27;: 0.1, &#x27;resblock&#x27;: &#x27;1&#x27;, &#x27;resblock_kernel_sizes&#x27;: [3, 7, 11], &#x27;resblock_dilation_sizes&#x27;: [[1, 3, 5], [1, 3, 5], [1, 3, 5]], &#x27;upsample_rates&#x27;: [10, 8, 2, 2], &#x27;upsample_initial_channel&#x27;: 512, &#x27;upsample_kernel_sizes&#x27;: [16, 16, 4, 4], &#x27;n_layers_q&#x27;: 3, &#x27;use_spectral_norm&#x27;: False, &#x27;gin_channels&#x27;: 256, &#x27;ssl_dim&#x27;: 256, &#x27;n_speakers&#x27;: 2&#125;, &#x27;spk&#x27;: &#123;&#x27;Sucial&#x27;: 0&#125;, &#x27;model_dir&#x27;: &#x27;./logs\\32k&#x27;&#125;<br>2023-02-08 18:07:42,440 32k WARNING E:\vs\so-vits-svc-32k is not a git repository, therefore hash value comparison will be ignored.<br>2023-02-08 18:07:45,451 32k INFO Loaded checkpoint &#x27;./logs\32k\G_0.pth&#x27; (iteration 1)<br>2023-02-08 18:07:45,998 32k INFO Loaded checkpoint &#x27;./logs\32k\D_0.pth&#x27; (iteration 1)<br>2023-02-08 18:07:55,722 32k INFO Train Epoch: 1 [0%]<br>2023-02-08 18:07:55,723 32k INFO [1.376741886138916, 3.908522129058838, 12.127800941467285, 35.539894104003906, 4.270486354827881, 0, 0.0001]<br>2023-02-08 18:08:01,381 32k INFO Saving model and optimizer state at iteration 1 to ./logs\32k\G_0.pth<br>2023-02-08 18:08:02,344 32k INFO Saving model and optimizer state at iteration 1 to ./logs\32k\D_0.pth<br>2023-02-08 18:08:19,482 32k INFO ====&gt; Epoch: 1<br>2023-02-08 18:08:40,093 32k INFO ====&gt; Epoch: 2<br>2023-02-08 18:09:01,010 32k INFO ====&gt; Epoch: 3<br>2023-02-08 18:09:21,715 32k INFO ====&gt; Epoch: 4<br>2023-02-08 18:09:42,242 32k INFO ====&gt; Epoch: 5<br>2023-02-08 18:10:02,528 32k INFO ====&gt; Epoch: 6<br>2023-02-08 18:10:22,965 32k INFO ====&gt; Epoch: 7<br>2023-02-08 18:10:29,149 32k INFO Train Epoch: 8 [14%]<br>2023-02-08 18:10:29,150 32k INFO [2.378505229949951, 2.3670239448547363, 10.534687042236328, 19.235595703125, 1.8958038091659546, 200, 9.991253280566489e-05]<br>2023-02-08 18:10:43,388 32k INFO ====&gt; Epoch: 8<br>2023-02-08 18:11:03,722 32k INFO ====&gt; Epoch: 9<br>2023-02-08 18:11:23,859 32k INFO ====&gt; Epoch: 10<br>...<br></code></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>出现类似以上的内容就说明是在开始训练了（显存会直接爆满）。停止训练有下面两种方法：</p>
+<blockquote>
+<ol>
+<li>按<code>Ctrl+C</code></li>
+<li>直接右上角叉掉<br>
+在控制台中运行 <code>python train.py -c config/config.json -m 32k</code>即可继续训练</li>
+</ol>
+</blockquote>
+<h3 id="日志及训练次数的查看">- 日志及训练次数的查看</h3>
+</li>
+<li>
+<p>日志保存的位置：<code>.\logs\32k\train.log</code><br>
+<strong>阅读举例：</strong></p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">示例3</span><br>2023-02-08 18:32:24,942 32k INFO [2.252035617828369, 2.5846095085144043, 8.220404624938965, 5   17.75478744506836, 0.9781494140625, 2000, 9.911637167309565e-05]<br>2023-02-08 18:32:28,889 32k INFO Saving model and optimizer state at iteration 72 to ./logs\32k\G_2000.pth<br>2023-02-08 18:32:29,661 32k INFO Saving model and optimizer state at iteration 72 to ./logs\32k\D_2000.pth<br><span class="hljs-meta prompt_"># </span><span class="language-bash">示例1</span><br>2023-02-08 18:32:39,907 32k INFO ====&gt; Epoch: 72<br>2023-02-08 18:33:00,099 32k INFO ====&gt; Epoch: 73<br>2023-02-08 18:33:20,682 32k INFO ====&gt; Epoch: 74 <br>2023-02-08 18:33:40,887 32k INFO ====&gt; Epoch: 75<br>2023-02-08 18:34:01,460 32k INFO ====&gt; Epoch: 76<br>2023-02-08 18:34:21,798 32k INFO ====&gt; Epoch: 77<br>2023-02-08 18:34:41,866 32k INFO ====&gt; Epoch: 78<br>2023-02-08 18:34:54,712 32k INFO Train Epoch: 79 [57%]<br><span class="hljs-meta prompt_"># </span><span class="language-bash">示例2</span><br>2023-02-08 18:34:54,712 32k INFO [2.282658100128174, 2.5492446422576904, 10.027194023132324, 15.401838302612305, 1.598284363746643, 2200, 9.902967736366644e-05]<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>以下的解释我引用了B站up主inifnite_loop的解释，<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Bd4y1W7BN">相关视频</a> <a target="_blank" rel="noopener" href="https://www.bilibili.com/read/cv21425662">相关专栏</a></strong></p>
+<ul>
+<li>需要关注两个参数：Epoch和global_step<br>
+Epoch表示迭代批次，每一批次可以看作一个迭代分组<br>
+Global_step表示总体迭代次数</li>
+<li>两者的关系是global_step = 最多语音说话人的语音数 /  batch_size  * epoch<br>
+batch_size是配置文件中的参数</li>
+<li><strong>示例1:</strong> 每一次迭代输出内 <code>====&gt; Epoch: 74</code> 表示第74迭代批次完成</li>
+<li><strong>示例2:</strong> <code>Global_step</code> 每200次输出一次 （配置文件中的参数<code>log_interval</code>）</li>
+<li><strong>示例3:</strong> <code>Global_step</code> 每1000次输出一次（配置文件中的参数<code>eval_interval</code>），会保存模型到新的文件</li>
+</ul>
+</blockquote>
+<h4 id="一般情况下训练10000次（大约2小时）就能得到一个不错的声音模型了">一般情况下训练10000次（大约2小时）就能得到一个不错的声音模型了</h4>
+<h3 id="保存的训练模型">- 保存的训练模型</h3>
+<blockquote>
+<p>以上，我们谈论到了每1000次迭代才会保存一次模型样本，那么，这些样本保存在哪里呢？如何处理这些样本呢？下面我将详细讲述。</p>
+</blockquote>
+<ul>
+<li>训练模型保存位置：<code>.\logs\32k</code></li>
+<li>训练一定时间后打开这个路径，你会发现有很多文件：</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs shell">D_0.pth<br>D_1000.pth<br>D_2000.pth<br>D_3000.pth<br>D_4000.pth<br>...<br>G_0.pth<br>G_1000.pth<br>G_2000.pth<br>G_3000.pth<br>G_4000.pth<br>...<br></code></pre></td></tr></table></figure>
+<ul>
+<li>如果你的硬盘空间不足，那么只要留下最后一次的G和D就可以了，前面的都可以删除（但是不要删别的文件）</li>
+</ul>
+<h2 id="4-推理使用">4. 推理使用</h2>
+<blockquote>
+<p>按上述方法训练得到最后一次的G和D后，该如何使用这些模型呢？下面我将讲述具体的使用操作方法</p>
+</blockquote>
+<h3 id="准备干声">- 准备干声</h3>
+<ul>
+<li>准备一首歌的干声，干声可以靠软件提取，我这边推荐的是Ultimate Vocal Remover，该软件开源并且可以在Github上下载到。<a target="_blank" rel="noopener" href="https://github.com/Anjok07/ultimatevocalremovergui">下载地址</a></li>
+<li>用音频处理软件（如Au，Studio One等）将这个干声分成若干段<strong>不超过40秒</strong>的片段并且一一保存</li>
+<li>将你处理好的干声片段放入<code>.\raw</code>文件夹</li>
+</ul>
+<h3 id="修改推理代码">- 修改推理代码</h3>
+<ul>
+<li>打开<code>inference_main.py</code>，修改第<code>17-27</code>行，具体修改内容如下：</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs shell">model_path = &quot;logs/32k/G_10000.pth&quot; # 这里改成你最新训练出来的G模型路径<br>config_path = &quot;configs/config.json&quot;<br>svc_model = Svc(model_path, config_path)<br>infer_tool.mkdir([&quot;raw&quot;, &quot;results&quot;])<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">支持多个wav文件，放在raw文件夹下</span><br>clean_names = [&quot;vocals_01&quot;, &quot;vocals_02&quot;,&quot;vocals_03&quot;] # 这里修改成你要处理的干声片段的文件名，支持多个文件<br>trans = [0]  # 音高调整，支持正负（半音）<br>spk_list = [&#x27;Sucial&#x27;]  # 这里是说话人的名字，之前准备训练样本的文件夹名字<br>slice_db = -40  # 默认-40，嘈杂的音频可以-30，干声保留呼吸可以-50<br>wav_format = &#x27;wav&#x27;  # 音频输出格式<br></code></pre></td></tr></table></figure>
+<h3 id="推理生成">- 推理生成</h3>
+<ul>
+<li>修改完成后保存代码，在<code>so-vits-svc</code>文件夹内运行终端，执行下面命令开始推理生成</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">python .\inference_main.py<br></code></pre></td></tr></table></figure>
+<ul>
+<li>待黑窗口自动关闭后，推理生成完成。生成的音频文件在<code>.\results</code>文件夹下</li>
+<li>如果听上去效果不好，就多训练模型，10000次不够就训练20000次</li>
+</ul>
+<h3 id="后期处理">- 后期处理</h3>
+<ul>
+<li>将生成的干音和歌曲伴奏（也可以通过Ultimate Vocal Remover提取）导入音频处理软件&amp;宿主软件（如Au，Studio One等）进行混音和母带处理，最终得到成品。</li>
+</ul>
+<h2 id="5-感谢名单">5. 感谢名单</h2>
+<blockquote>
+<ul>
+<li><strong>以下是对本文档的撰写有帮助的感谢名单：</strong><br>
+so-vits-svc <a target="_blank" rel="noopener" href="https://github.com/innnky/so-vits-svc">官方源代码和帮助文档</a><br>
+B站up主inifnite_loop <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Bd4y1W7BN">相关视频</a> <a target="_blank" rel="noopener" href="https://www.bilibili.com/read/cv21425662">相关专栏</a><br>
+所有提供训练音频样本的人员</li>
+</ul>
+</blockquote>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/SO-VITS-SVC/">#SO-VITS-SVC</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>【转载】SO-VITS-SVC 3.0 详细安装、训练、推理使用步骤</div>
+      <div>https://lemonmiaow.xyz/2024/02/22/[转载]SO-VITS-SVC 3.0详细安装、训练、推理使用步骤/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Lemon_miaow</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年2月22日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                    <i class="iconfont icon-nc"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/02/22/SO-VITS-SVC%204.0%E5%85%A8%E6%B5%81%E7%A8%8B%E6%95%99%E7%A8%8B/" title="SO-VITS-SVC 4.0 全流程教程">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">SO-VITS-SVC 4.0 全流程教程</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/02/22/hello-world/" title="Hello World">
+                        <span class="hidden-mobile">Hello World</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Powered by Hexo</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/custom/t.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
